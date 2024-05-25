@@ -16,7 +16,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url("./src/assets/bg.jpeg");
+  background-image: url("/src/assets/bg.jpeg");
   background-size: cover;
   background-position: center;
   user-select: none;
