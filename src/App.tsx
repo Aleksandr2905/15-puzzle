@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import { canMoveItem, correctArr, getEmptyXY, getRandomArr } from "./utils";
 import classnames from "classnames";
 import "./App.css";
@@ -18,12 +19,38 @@ function App() {
     }
   };
 
+  const triggerConfetti = () => {
+    confetti({
+      particleCount: 300,
+      spread: 200,
+      origin: { x: 0.5, y: 0.5 },
+    });
+  };
+
+  const arraysEqual = (arr1: number[][], arr2: number[][]) => {
+    for (let i = 0; i < arr1.length; i++) {
+      for (let j = 0; j < arr1[i].length; j++) {
+        if (arr1[i][j] !== arr2[i][j]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    if (arraysEqual(state, correctArr)) {
+      triggerConfetti();
+    }
+  }, [state]);
+
   return (
     <>
       <div className="game">
         {state.map((line, y) =>
           line.map((item, x) => (
             <div
+              key={`${y}-${x}`}
               className={classnames(
                 "game-item",
                 correctArr[y][x] === item && "success",
